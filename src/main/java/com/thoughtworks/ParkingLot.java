@@ -1,14 +1,22 @@
 package com.thoughtworks;
 
-public class ParkingLot {
-    private  final int capacity;
+import java.util.ArrayList;
+import java.util.List;
 
-    public ParkingLot(int capacity){
+public class ParkingLot {
+    private final int capacity;
+    List<Object> list = new ArrayList<Object>();
+
+    public ParkingLot(int capacity) {
         this.capacity = capacity;
     }
 
-    public boolean park(Object o)
+    public boolean park(Object object)
     {
-        return true;
+        if (list.size() <capacity) {
+            list.add(object);
+            return true;
+        }
+        return false;
     }
 }

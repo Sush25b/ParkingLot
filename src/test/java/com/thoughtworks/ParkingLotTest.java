@@ -10,7 +10,7 @@ public class ParkingLotTest {
 
     @Test
     public void givenParkingLot_whenPark_thenShouldBeAbleToPark() {
-        ParkingLot parkingLot = new ParkingLot(0);
+        ParkingLot parkingLot = new ParkingLot(1);
 
         assertTrue(parkingLot.park(new Object()));
     }
@@ -21,4 +21,12 @@ public class ParkingLotTest {
 
         assertTrue(parkingLot.park(new Object()));
     }
+
+    @Test
+    public void givenParkingLotCapacityNoTEmpty_whenPark_thenShouldNotBeAbleToPark() {
+        ParkingLot parkingLot = new ParkingLot(0);
+
+        assertFalse( parkingLot.park( new Object()) );
+    }
+
 }
