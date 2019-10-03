@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ParkingLot {
     private final int capacity;
-    List<Object> list = new ArrayList<Object>();
+    private List<Object> list = new ArrayList<Object>();
 
     public ParkingLot(int capacity) {
         this.capacity = capacity;
@@ -13,7 +13,7 @@ public class ParkingLot {
 
     public boolean park(Object object) {
 
-        if (list.size() < capacity) {
+        if (list.size() < capacity && !list.contains(object)) {
             list.add(object);
             return true;
         }
