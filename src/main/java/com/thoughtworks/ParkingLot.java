@@ -11,9 +11,8 @@ public class ParkingLot {
         this.capacity = capacity;
     }
 
-    public boolean park(Object object)
-    {
-        if (list.size() <capacity) {
+    public boolean park(Object object) {
+        if (list.size() < capacity) {
             list.add(object);
             return true;
         }
