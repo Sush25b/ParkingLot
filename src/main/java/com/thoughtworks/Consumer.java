@@ -25,7 +25,7 @@ public class Consumer {
         int i= 0;
         do
         {
-            System.out.println( parkingLot.park( vehicleToPark.get(i)) +"parkingLot" + i );
+//            System.out.println( parkingLot.park( vehicleToPark.get(i)) +"parkingLot" + i );
             i++;
         }while(i < vehicleToPark.size());
     }
