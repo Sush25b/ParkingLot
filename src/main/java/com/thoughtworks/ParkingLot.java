@@ -12,6 +12,7 @@ public class ParkingLot {
     }
 
     public boolean park(Object object) {
+
         if (list.size() < capacity) {
             list.add(object);
             return true;

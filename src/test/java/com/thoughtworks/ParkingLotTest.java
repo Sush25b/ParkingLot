@@ -36,4 +36,12 @@ public class ParkingLotTest {
         assertTrue( parkingLot.park( new Object()) );
     }
 
+    @Test
+    public void givenParkingLotCapacityTwoWithOneFreeSpace_whenPark_thenShouldBeAbleToPark() {
+        ParkingLot parkingLot = new ParkingLot(2);
+        parkingLot.park(new Object());
+
+        assertTrue( parkingLot.park( new Object()) );
+    }
+
 }
