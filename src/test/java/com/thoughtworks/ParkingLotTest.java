@@ -12,21 +12,22 @@ public class ParkingLotTest {
     public void givenParkingLot_whenPark_thenShouldBeAbleToPark() {
         ParkingLot parkingLot = new ParkingLot(1);
 
-        assertTrue(parkingLot.park(new Object()));
+        Assert.assertEquals("Sucessfully Park", parkingLot.park(new Object()));
     }
 
     @Test
     public void givenParkingLotHavingCapacityTen_whenPark_thenShouldBeAbleToPark() {
         ParkingLot parkingLot = new ParkingLot(10);
 
-        assertTrue(parkingLot.park(new Object()));
+        Assert.assertEquals("Sucessfully Park", parkingLot.park(new Object()));
+
     }
 
     @Test
     public void givenParkingLotWithNoCapacity_whenPark_thenShouldNotBeAbleToPark() {
         ParkingLot parkingLot = new ParkingLot(0);
 
-        assertFalse(parkingLot.park(new Object()));
+        Assert.assertEquals("Space Not Available", parkingLot.park(new Object()));
     }
 
     @Test
@@ -34,7 +35,7 @@ public class ParkingLotTest {
         ParkingLot parkingLot = new ParkingLot(2);
         parkingLot.park(new Object());
 
-        assertTrue(parkingLot.park(new Object()));
+        Assert.assertEquals("Sucessfully Park", parkingLot.park(new Object()));
     }
 
     @Test
@@ -43,7 +44,7 @@ public class ParkingLotTest {
         parkingLot.park(new Object());
         parkingLot.park(new Object());
 
-        assertFalse(parkingLot.park(new Object()));
+        Assert.assertEquals("Space Not Available", parkingLot.park(new Object()));
     }
 
     @Test
@@ -53,7 +54,7 @@ public class ParkingLotTest {
         Object object = new Object();
         parkingLot.park(object);
 
-        assertFalse(parkingLot.park(object));
+        Assert.assertEquals("Already Parked", parkingLot.park(object));
     }
 
 
