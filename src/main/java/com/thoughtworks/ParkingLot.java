@@ -6,9 +6,9 @@ import java.util.List;
 public class ParkingLot {
     private final int capacity;
     private List<Object> vehicles = new ArrayList<>();
-    private Owner owner = new Owner();
+    private Owner owner;
 
-    public ParkingLot(int capacity,Owner owner) {
+    public ParkingLot(int capacity, Owner owner) {
         this.capacity = capacity;
         this.owner=owner;
     }

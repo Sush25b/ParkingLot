@@ -1,13 +1,7 @@
 package com.thoughtworks;
 
-public class Owner {
+public interface Owner {
+    void informParkingLotFull();
 
-
-    void informParkingLotFull()
-    {
-    }
-
-    void informParkingLotAvailable()
-    {
-    }
+    void informParkingLotAvailable();
 }
