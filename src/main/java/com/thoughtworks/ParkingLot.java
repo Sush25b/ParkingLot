@@ -6,14 +6,7 @@ import java.util.List;
 public class ParkingLot {
     private final int capacity;
     private List<Object> vehicles = new ArrayList<>();
-
-//    public static Map<Integer, String> message = new TreeMap<>();
-//
-//    static {
-//        message.put(1, "Space Not Available");
-//        message.put(2, "Already Parked");
-//        message.put(3, "Sucessfully Park");
-//    }
+    private Owner owner = new Owner();
 
     public ParkingLot(int capacity) {
         this.capacity = capacity;
@@ -23,37 +16,37 @@ public class ParkingLot {
         return vehicles.size() < capacity;
     }
 
-    private boolean isNotAlreadyParked(Object object)  {
+    private boolean isNotAlreadyParked(Object object) {
         return vehicles.contains(object);
     }
 
     public boolean park(Object object) throws ParkingLotException {
 
         if (!isSpaceAvailable()) {
-           throw new ParkingLotException("Space Not Available");
-//            return message.get(1);
+            throw new ParkingLotException("Space Not Available");
         }
 
         if (isNotAlreadyParked(object)) {
             throw new ParkingLotException("Already Parked");
-//            return message.get(2);
         }
 
-         return vehicles.add(object);
-//        return true;
-//        return message.get(3);
+        vehicles.add(object);
+        owner.getNotify( checkCapacityIsFull() );
+        return true;
     }
 
-    public boolean unPark(Object object) throws ParkingLotException {
-        if (vehicles.contains(object)) {
-            return vehicles.remove(object);
+    public Object unPark(Object object) throws ParkingLotException {
+
+        if (!vehicles.contains(object)) {
+            throw new ParkingLotException("Object is Not Parked");
         }
-        if(vehicles.isEmpty()){
-            throw  new ParkingLotException("Object is Not Parked");
-        }
-//        return new ParkingLotExceptionEx("Object is Not Parked");
-        return false;
+
+        return vehicles.remove(vehicles.indexOf(object));
     }
 
+    public boolean checkCapacityIsFull()
+    {
+        return !isSpaceAvailable();
+    }
 
 }

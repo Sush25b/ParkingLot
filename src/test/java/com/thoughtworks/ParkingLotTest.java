@@ -1,6 +1,5 @@
 package com.thoughtworks;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -81,6 +80,16 @@ public class ParkingLotTest {
 
         ParkingLotException exception = assertThrows(ParkingLotException.class, () -> parkingLot.unPark(objectTwo));
         assertEquals("Object is Not Parked", exception.message());
+    }
+
+    @Test
+    void givenParkingLotIsFull_whenpark_ThenItShouldReturnParkingLotFull() throws ParkingLotException {
+
+        ParkingLot parkingLot = new ParkingLot(1);
+        Object objectOne = new Object();
+        parkingLot.park(objectOne);
+
+        assertEquals("parking lot is full", Owner.getMessage);
     }
 
 
