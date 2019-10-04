@@ -8,8 +8,9 @@ public class ParkingLot {
     private List<Object> vehicles = new ArrayList<>();
     private Owner owner = new Owner();
 
-    public ParkingLot(int capacity) {
+    public ParkingLot(int capacity,Owner owner) {
         this.capacity = capacity;
+        this.owner=owner;
     }
 
     private boolean isSpaceAvailable() {
@@ -31,7 +32,7 @@ public class ParkingLot {
         }
 
         vehicles.add(object);
-        owner.getNotify( checkCapacityIsFull() );
+        this.notifyIfFull();   //parkingLotGotFull   isParkingLotFull checkParkingSpace getParkingSpace
         return true;
     }
 
@@ -41,12 +42,23 @@ public class ParkingLot {
             throw new ParkingLotException("Object is Not Parked");
         }
 
+        this.notifyIfFull();
         return vehicles.remove(vehicles.indexOf(object));
     }
 
-    public boolean checkCapacityIsFull()
+    void notifyIfFull()
     {
-        return !isSpaceAvailable();
+        if(!isSpaceAvailable())       //space is full--> then only notify owner  ELSE dont notify
+        {
+            owner.informParkingLotFull();
+        }
+
+        if(isSpaceAvailable())       //space is full--> then only notify owner  ELSE dont notify
+        {
+            owner.informParkingLotAvailable();
+        }
+
     }
+
 
 }
