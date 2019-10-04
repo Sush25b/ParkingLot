@@ -8,20 +8,20 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ParkingLotTest {
 
     @Test
-    public void givenParkingLot_whenPark_thenShouldBeAbleToPark() throws ParkingLotException {
+    void givenParkingLot_whenPark_thenShouldBeAbleToPark() throws ParkingLotException {
         ParkingLot parkingLot = new ParkingLot(1);
         assertTrue(parkingLot.park(new Object()));
     }
 
     @Test
-    public void givenParkingLotHavingCapacityTen_whenPark_thenShouldBeAbleToPark() throws ParkingLotException {
+    void givenParkingLotHavingCapacityTen_whenPark_thenShouldBeAbleToPark() throws ParkingLotException {
         ParkingLot parkingLot = new ParkingLot(10);
 
         assertTrue(parkingLot.park(new Object()));
     }
 
     @Test
-    public void givenParkingLotWithNoCapacity_whenPark_thenShouldNotBeAbleToPark() throws ParkingLotException {
+    void givenParkingLotWithNoCapacity_whenPark_thenShouldNotBeAbleToPark() throws ParkingLotException {
         ParkingLot parkingLot = new ParkingLot(0);
         Object objectOne = new Object();
 
@@ -31,7 +31,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void givenParkingLotCapacityTwoWithOneFreeSpace_whenPark_thenShouldBeAbleToPark() throws ParkingLotException {
+    void givenParkingLotCapacityTwoWithOneFreeSpace_whenPark_thenShouldBeAbleToPark() throws ParkingLotException {
         ParkingLot parkingLot = new ParkingLot(2);
         parkingLot.park(new Object());
 
@@ -39,7 +39,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void givenParkingLotCapacityTwoWithNoFreeSpace_whenPark_thenShouldNotBeAbleToPark() throws ParkingLotException {
+    void givenParkingLotCapacityTwoWithNoFreeSpace_whenPark_thenShouldNotBeAbleToPark() throws ParkingLotException {
         ParkingLot parkingLot = new ParkingLot(2);
         parkingLot.park(new Object());
         parkingLot.park(new Object());
@@ -50,7 +50,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void givenParkingLotCapacityTwoWithNoFreeSpace_whenParkSameObject_thenItThrowsException() throws ParkingLotException {
+    void givenParkingLotCapacityTwoWithNoFreeSpace_whenParkSameObject_thenItThrowsException() throws ParkingLotException {
         ParkingLot parkingLot = new ParkingLot(2);
         Object objectOne = new Object();
 
@@ -61,17 +61,27 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void givenParkingCapacityWithUnparkObject_WhenUnpark_ThenItShouldBeUnPark() throws ParkingLotException {
+    void givenParkingLotCapacityOne_WhenUnparkTheParkObject_ThenItShouldBeUnPark() throws ParkingLotException {
 
         ParkingLot parkingLot = new ParkingLot(1);
         Object object = new Object();
         parkingLot.park(object);
 
-        assertTrue(parkingLot.unPark(object));
+        assertEquals(object, parkingLot.unPark(object));
     }
 
+    @Test
+    void givenParkingLotWithCapacityTwo_WhenUnParkTheNotParkedObject_ThenItShouldNotAbleToUnPark() throws ParkingLotException {
+        ParkingLot parkingLot = new ParkingLot(2);
 
+        Object objectOne = new Object();
+        Object objectTwo = new Object();
 
+        parkingLot.park(objectOne);
+
+        ParkingLotException exception = assertThrows(ParkingLotException.class, () -> parkingLot.unPark(objectTwo));
+        assertEquals("Object is Not Parked", exception.message());
+    }
 
 
 }
