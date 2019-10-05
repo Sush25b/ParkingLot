@@ -214,14 +214,35 @@ public class ParkingLotTest {
         subscribers.add(dummyOwner);
         subscribers.add(dummySecurityGuard);
         ParkingLot parkingLot = new ParkingLot(2, subscribers);
-        Object firstVehicle = new Object();
+        Object vehicle = new Object();
 
         DummyManager dummyManager=new DummyManager();
         parkingLot.addSubscriber(dummyManager);
-        parkingLot.park(firstVehicle);
+        parkingLot.park(vehicle);
 
         assertEquals(1, dummyOwner.noOfTimesLotAvailable);
         assertEquals(1, dummySecurityGuard.noOfTimesLotAvailable);
         assertEquals(1,dummyManager.noOfTimesLotAvailable);
+    }
+
+    @Test
+    void givenParkingRemoveOneSubscriber_whenParkAndUnPark_ThenInformOnlyExistingSubcriber() throws Exception {
+
+        List<Subscriber> subscribers=new ArrayList<>();
+        DummyOwner dummyOwner = new DummyOwner();
+        DummySecurityGuard dummySecurityGuard = new DummySecurityGuard();
+        subscribers.add(dummyOwner);
+        subscribers.add(dummySecurityGuard);
+        ParkingLot parkingLot = new ParkingLot(2, subscribers);
+        Object vehicleOne = new Object();
+
+        parkingLot.park(vehicleOne);
+        assertEquals(1, dummyOwner.noOfTimesLotAvailable);
+        assertEquals(1, dummySecurityGuard.noOfTimesLotAvailable);
+
+        parkingLot.removeSubscriber(dummySecurityGuard);
+        parkingLot.unPark(vehicleOne);
+        assertEquals(2, dummyOwner.noOfTimesLotAvailable);
+        assertEquals(1, dummySecurityGuard.noOfTimesLotAvailable);
     }
 }
