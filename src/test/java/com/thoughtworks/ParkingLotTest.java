@@ -142,7 +142,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    void givenParkingLotWithCapacityTwo_whenUnParkOneVechile_ThenItShouldInformOwnerLotIsAvailableOnce() throws Exception {
+    void givenParkingLotCapacityTwoWithTwoVechilePark_whenUnParkOneVechile_ThenItShouldInformOwnerOnceThatLotIsAvailable() throws Exception {
 
         DummyOwner dummyOwner = new DummyOwner();
         ParkingLot parkingLot = new ParkingLot(2, dummyOwner);
