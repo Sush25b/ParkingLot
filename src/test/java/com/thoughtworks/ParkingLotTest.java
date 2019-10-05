@@ -2,6 +2,9 @@ package com.thoughtworks;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class DummyOwner implements Subscriber {
@@ -40,7 +43,7 @@ public class ParkingLotTest {
 
     @Test
     void givenParkingLot_whenPark_thenShouldBeAbleToPark() throws Exception {
-        Subscriber owner = new DummyOwner();
+        List<Subscriber> owner = Arrays.asList(new DummyOwner());
         ParkingLot parkingLot = new ParkingLot(1, owner);
         //assertTrue(parkingLot.park(new Object()));
         assertDoesNotThrow(() -> parkingLot.park(new Object()));
@@ -48,7 +51,8 @@ public class ParkingLotTest {
 
     @Test
     void givenParkingLotHavingCapacityTen_whenPark_thenShouldBeAbleToPark() throws Exception {
-        Subscriber owner = new DummyOwner();
+        List<Subscriber> owner = Arrays.asList(new DummyOwner());
+        // Subscriber owner = new DummyOwner();
         ParkingLot parkingLot = new ParkingLot(10, owner);
 
         assertDoesNotThrow(() -> parkingLot.park(new Object()));
@@ -56,7 +60,8 @@ public class ParkingLotTest {
 
     @Test
     void givenParkingLotWithNoCapacity_whenPark_thenShouldNotBeAbleToPark() throws Exception {
-        Subscriber owner = new DummyOwner();
+        //Subscriber owner = new DummyOwner();
+        List<Subscriber> owner = Arrays.asList(new DummyOwner());
         ParkingLot parkingLot = new ParkingLot(0, owner);
         Object objectOne = new Object();
 
@@ -65,7 +70,8 @@ public class ParkingLotTest {
 
     @Test
     void givenParkingLotCapacityTwoWithOneFreeSpace_whenPark_thenShouldBeAbleToPark() throws Exception {
-        Subscriber owner = new DummyOwner();
+        //Subscriber owner = new DummyOwner();
+        List<Subscriber> owner = Arrays.asList(new DummyOwner());
         ParkingLot parkingLot = new ParkingLot(2, owner);
         parkingLot.park(new Object());
 
@@ -74,7 +80,8 @@ public class ParkingLotTest {
 
     @Test
     void givenParkingLotCapacityTwoWithNoFreeSpace_whenPark_thenShouldNotBeAbleToPark() throws Exception {
-        Subscriber owner = new DummyOwner();
+        //Subscriber owner = new DummyOwner();
+        List<Subscriber> owner = Arrays.asList(new DummyOwner());
         ParkingLot parkingLot = new ParkingLot(2, owner);
         parkingLot.park(new Object());
         parkingLot.park(new Object());
@@ -84,7 +91,8 @@ public class ParkingLotTest {
 
     @Test
     void givenParkingLotCapacityTwoWithNoFreeSpace_whenParkSameObject_thenItThrowsException() throws Exception {
-        Subscriber owner = new DummyOwner();
+        //Subscriber owner = new DummyOwner();
+        List<Subscriber> owner = Arrays.asList(new DummyOwner());
         ParkingLot parkingLot = new ParkingLot(2, owner);
         Object objectOne = new Object();
 
@@ -95,7 +103,8 @@ public class ParkingLotTest {
 
     @Test
     void givenParkingLotCapacityOne_WhenUnparkTheParkObject_ThenItShouldBeUnPark() throws Exception {
-        Subscriber owner = new DummyOwner();
+       // Subscriber owner = new DummyOwner();
+        List<Subscriber> owner = Arrays.asList(new DummyOwner());
         ParkingLot parkingLot = new ParkingLot(1, owner);
         Object object = new Object();
         parkingLot.park(object);
@@ -105,7 +114,8 @@ public class ParkingLotTest {
 
     @Test
     void givenParkingLotWithCapacityTwo_WhenUnParkTheNotParkedObject_ThenItShouldNotAbleToUnPark() throws Exception {
-        Subscriber owner = new DummyOwner();
+        List<Subscriber> owner = Arrays.asList(new DummyOwner()); //Subscriber owner = new DummyOwner();
+
         ParkingLot parkingLot = new ParkingLot(2, owner);
 
         Object objectOne = new Object();
@@ -120,20 +130,22 @@ public class ParkingLotTest {
     void givenParkingLotWithCapacityTwo_whenParkTwoVechile_ThenItShouldInformOwnerLotIsFullOnce() throws Exception {
 
         DummyOwner dummyOwner = new DummyOwner();
-        ParkingLot parkingLot = new ParkingLot(2, dummyOwner);
+        List<Subscriber> owner = Arrays.asList(dummyOwner);
+        ParkingLot parkingLot = new ParkingLot(2, owner);
         Object firstVechile = new Object();
         Object secondVechile = new Object();
         parkingLot.park(firstVechile);
         parkingLot.park(secondVechile);
 
-        assertEquals(1, dummyOwner.noOfTimesLotFull);
+        assertEquals(1,dummyOwner.noOfTimesLotFull );
     }
 
     @Test
     void givenParkingLotCapacityTwoWithTwoVechilePark_whenUnParkOneVechile_ThenItShouldInformOwnerOnceThatLotIsAvailable() throws Exception {
 
         DummyOwner dummyOwner = new DummyOwner();
-        ParkingLot parkingLot = new ParkingLot(2, dummyOwner);
+        List<Subscriber> owner = Arrays.asList(dummyOwner);
+        ParkingLot parkingLot = new ParkingLot(2, owner);
         Object firstVehicle = new Object();
         Object secondVehicle = new Object();
         parkingLot.park(firstVehicle);
@@ -145,10 +157,11 @@ public class ParkingLotTest {
     }
 
     @Test
-    void givenParkingLotWithCapacityTwo_whenUnParkAndPark_ThenItShouldInformOwnerLotOnce() throws Exception {
+    void givenParkingLotWithCapacityTwo_whenUnParkAndPark_ThenItShouldInformOwnerLotTwice() throws Exception {
 
         DummyOwner dummyOwner = new DummyOwner();
-        ParkingLot parkingLot = new ParkingLot(2, dummyOwner);
+        List<Subscriber> owner = Arrays.asList(dummyOwner);
+        ParkingLot parkingLot = new ParkingLot(2, owner);
         Object firstVehicle = new Object();
         Object secondVehicle = new Object();
         parkingLot.park(firstVehicle);
@@ -159,5 +172,23 @@ public class ParkingLotTest {
 
         assertEquals(2, dummyOwner.noOfTimesLotAvailable);
         assertEquals(2, dummyOwner.noOfTimesLotAvailable);
+    }
+
+    @Test
+    void givenParkingLotCapacityTwoWithTwoVechilePark_whenUnParkOneVechile_ThenInformOwnerAndGuardOnceThatLotIsAvailable() throws Exception {
+
+        DummyOwner dummyOwner = new DummyOwner();
+        DummySecurityGuard dummyguard= new DummySecurityGuard();
+        List<Subscriber> owner = Arrays.asList(dummyOwner, dummyguard);
+        ParkingLot parkingLot = new ParkingLot(2, owner);
+        Object firstVehicle = new Object();
+        Object secondVehicle = new Object();
+        parkingLot.park(firstVehicle);
+        parkingLot.park(secondVehicle);
+
+        parkingLot.unPark(secondVehicle);
+
+        assertEquals(2, dummyOwner.noOfTimesLotAvailable);
+        assertEquals(2,dummyguard.noOfTimesLotAvailable);
     }
 }

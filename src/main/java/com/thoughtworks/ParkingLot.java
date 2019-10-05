@@ -6,9 +6,9 @@ import java.util.List;
 public class ParkingLot {
     private final int capacity;
     private List<Object> vehicles = new ArrayList<>();
-    private Subscriber subscriber; // TODO - both Owner and Security Guard needs to get the notification.
+    private List<Subscriber> subscriber; // TODO - both Owner and Security Guard needs to get the notification.
 
-    public ParkingLot(int capacity, Subscriber subscriber) {
+    public ParkingLot(int capacity, List<Subscriber> subscriber) {
         this.capacity = capacity;
         this.subscriber = subscriber;
     }
@@ -50,12 +50,17 @@ public class ParkingLot {
     {
         if(!isSpaceAvailable())       //space is full--> then only notify owner  ELSE dont notify
         {
-            subscriber.informParkingLotFull();
+            for(Subscriber s:subscriber){
+                s.informParkingLotFull();
+            }
         }
+
 
         if(isSpaceAvailable())       //space is  not full--> then only notify owner  ELSE dont notify
         {
-            subscriber.informParkingLotAvailable();
+            for(Subscriber s:subscriber){
+                s.informParkingLotAvailable();
+            }
         }
 
     }
