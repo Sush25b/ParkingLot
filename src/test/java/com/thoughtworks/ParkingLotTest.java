@@ -51,66 +51,62 @@ class DummySecurityGuard implements Consumer {
 public class ParkingLotTest {
 
     @Test
-    void givenParkingLot_whenPark_thenShouldBeAbleToPark() throws ParkingLotException {
+    void givenParkingLot_whenPark_thenShouldBeAbleToPark() throws Exception {
         Consumer owner = new DummyOwner();
         ParkingLot parkingLot = new ParkingLot(1, owner);
-        assertTrue(parkingLot.park(new Object()));
+        //assertTrue(parkingLot.park(new Object()));
+        assertDoesNotThrow(()-> parkingLot.park(new Object()));
     }
 
     @Test
-    void givenParkingLotHavingCapacityTen_whenPark_thenShouldBeAbleToPark() throws ParkingLotException {
+    void givenParkingLotHavingCapacityTen_whenPark_thenShouldBeAbleToPark() throws Exception {
         Consumer owner = new DummyOwner();
         ParkingLot parkingLot = new ParkingLot(10, owner);
 
-        assertTrue(parkingLot.park(new Object()));
+        assertDoesNotThrow(()-> parkingLot.park(new Object()));
     }
 
     @Test
-    void givenParkingLotWithNoCapacity_whenPark_thenShouldNotBeAbleToPark() throws ParkingLotException {
+    void givenParkingLotWithNoCapacity_whenPark_thenShouldNotBeAbleToPark() throws Exception {
         Consumer owner = new DummyOwner();
         ParkingLot parkingLot = new ParkingLot(0, owner);
         Object objectOne = new Object();
 
-        ParkingLotException exception = assertThrows(ParkingLotException.class, () -> parkingLot.park(objectOne));
-
-        assertEquals("Space Not Available", exception.message());
+        assertThrows(ParkingLotFullException.class, () -> parkingLot.park(objectOne));
     }
 
     @Test
-    void givenParkingLotCapacityTwoWithOneFreeSpace_whenPark_thenShouldBeAbleToPark() throws ParkingLotException {
+    void givenParkingLotCapacityTwoWithOneFreeSpace_whenPark_thenShouldBeAbleToPark() throws Exception {
         Consumer owner = new DummyOwner();
         ParkingLot parkingLot = new ParkingLot(2, owner);
         parkingLot.park(new Object());
 
-        assertTrue(parkingLot.park(new Object()));
+        assertDoesNotThrow(()-> parkingLot.park(new Object()));
     }
 
     @Test
-    void givenParkingLotCapacityTwoWithNoFreeSpace_whenPark_thenShouldNotBeAbleToPark() throws ParkingLotException {
+    void givenParkingLotCapacityTwoWithNoFreeSpace_whenPark_thenShouldNotBeAbleToPark() throws Exception {
         Consumer owner = new DummyOwner();
         ParkingLot parkingLot = new ParkingLot(2, owner);
         parkingLot.park(new Object());
         parkingLot.park(new Object());
 
-        ParkingLotException exception = assertThrows(ParkingLotException.class, () -> parkingLot.park(new Object()));
-
-        assertEquals("Space Not Available", exception.message());
+        assertThrows(ParkingLotFullException.class,()->parkingLot.park(new Object()));
     }
 
     @Test
-    void givenParkingLotCapacityTwoWithNoFreeSpace_whenParkSameObject_thenItThrowsException() throws ParkingLotException {
+    void givenParkingLotCapacityTwoWithNoFreeSpace_whenParkSameObject_thenItThrowsException() throws Exception {
         Consumer owner = new DummyOwner();
         ParkingLot parkingLot = new ParkingLot(2, owner);
         Object objectOne = new Object();
 
-        assertTrue(parkingLot.park(objectOne));
+        parkingLot.park(objectOne);
 
-        ParkingLotException exception = assertThrows(ParkingLotException.class, () -> parkingLot.park(objectOne));
-        assertEquals("Already Parked", exception.message());
+        assertThrows(VechileAlreadyParkedException.class,()-> parkingLot.park(objectOne));
     }
 
     @Test
-    void givenParkingLotCapacityOne_WhenUnparkTheParkObject_ThenItShouldBeUnPark() throws ParkingLotException {
+    void givenParkingLotCapacityOne_WhenUnparkTheParkObject_ThenItShouldBeUnPark() throws Exception {
         Consumer owner = new DummyOwner();
         ParkingLot parkingLot = new ParkingLot(1, owner);
         Object object = new Object();
@@ -120,7 +116,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    void givenParkingLotWithCapacityTwo_WhenUnParkTheNotParkedObject_ThenItShouldNotAbleToUnPark() throws ParkingLotException {
+    void givenParkingLotWithCapacityTwo_WhenUnParkTheNotParkedObject_ThenItShouldNotAbleToUnPark() throws Exception {
         Consumer owner = new DummyOwner();
         ParkingLot parkingLot = new ParkingLot(2, owner);
 
@@ -129,12 +125,11 @@ public class ParkingLotTest {
 
         parkingLot.park(objectOne);
 
-        ParkingLotException exception = assertThrows(ParkingLotException.class, () -> parkingLot.unPark(objectTwo));
-        assertEquals("Object is Not Parked", exception.message());
+        assertThrows(VechileNotFoundException.class,()->parkingLot.unPark(objectTwo));
     }
 
     @Test
-    void givenParkingLotWithCapacityTwo_whenParkTwoVechile_ThenItShouldInformOwnerLotIsFullOnce() throws ParkingLotException {
+    void givenParkingLotWithCapacityTwo_whenParkTwoVechile_ThenItShouldInformOwnerLotIsFullOnce() throws Exception {
 
         DummyOwner dummyOwner = new DummyOwner();
         ParkingLot parkingLot = new ParkingLot(2, dummyOwner);
@@ -147,7 +142,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    void givenParkingLotWithCapacityTwo_whenUnParkOneVechile_ThenItShouldInformOwnerLotIsAvailableOnce() throws ParkingLotException {
+    void givenParkingLotWithCapacityTwo_whenUnParkOneVechile_ThenItShouldInformOwnerLotIsAvailableOnce() throws Exception {
 
         DummyOwner dummyOwner = new DummyOwner();
         ParkingLot parkingLot = new ParkingLot(2, dummyOwner);

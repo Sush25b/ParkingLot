@@ -21,32 +21,31 @@ public class ParkingLot {
         return vehicles.contains(object);
     }
 
-    public boolean park(Object object) throws ParkingLotException {
+    public void park(Object object) throws Exception {
 
         if (!isSpaceAvailable()) {
-            throw new ParkingLotException("Space Not Available");
+            throw new ParkingLotFullException();
         }
 
         if (isNotAlreadyParked(object)) {
-            throw new ParkingLotException("Already Parked");
+            throw new VechileAlreadyParkedException();
         }
 
         vehicles.add(object);
         this.notifyIfFull();   //parkingLotGotFull   isParkingLotFull checkParkingSpace getParkingSpace
-        return true;
     }
 
-    public Object unPark(Object object) throws ParkingLotException {
+    public Object unPark(Object object) throws Exception {
 
         if (!vehicles.contains(object)) {
-            throw new ParkingLotException("Object is Not Parked");
+            throw new VechileNotFoundException();
         }
 
         this.notifyIfFull();
         return vehicles.remove(vehicles.indexOf(object));
     }
 
-    void notifyIfFull()
+    private void notifyIfFull()
     {
         if(!isSpaceAvailable())       //space is full--> then only notify owner  ELSE dont notify
         {
