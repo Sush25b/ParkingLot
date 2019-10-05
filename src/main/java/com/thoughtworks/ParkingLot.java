@@ -6,11 +6,11 @@ import java.util.List;
 public class ParkingLot {
     private final int capacity;
     private List<Object> vehicles = new ArrayList<>();
-    private Owner owner;
+    private Consumer consumer;
 
-    public ParkingLot(int capacity, Owner owner) {
+    public ParkingLot(int capacity, Consumer consumer) {
         this.capacity = capacity;
-        this.owner=owner;
+        this.consumer = consumer;
     }
 
     private boolean isSpaceAvailable() {
@@ -50,15 +50,13 @@ public class ParkingLot {
     {
         if(!isSpaceAvailable())       //space is full--> then only notify owner  ELSE dont notify
         {
-            owner.informParkingLotFull();
+            consumer.informParkingLotFull();
         }
 
         if(isSpaceAvailable())       //space is full--> then only notify owner  ELSE dont notify
         {
-            owner.informParkingLotAvailable();
+            consumer.informParkingLotAvailable();
         }
 
     }
-
-
 }
