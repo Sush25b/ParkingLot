@@ -42,7 +42,7 @@ public class ParkingLot {
             throw new VechileNotFoundException();
         }
 
-        vehicles.remove(vehicles.indexOf(object));
+        vehicles.remove(object);
         this.notifyIfSpaceFull();
         this.notifyIfSpaceNotFull();
         return object;
@@ -64,5 +64,15 @@ public class ParkingLot {
                 s.informParkingLotAvailable();
             }
         }
+    }
+
+    public void addSubscriber(Subscriber addNewSubcriber)
+    {
+        subscriber.add(addNewSubcriber);
+    }
+
+    public void removeSubscriber(Subscriber removeSubcriber)
+    {
+        subscriber.remove(removeSubcriber);
     }
 }
