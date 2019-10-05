@@ -4,47 +4,35 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class DummyOwner implements Consumer {
-    private int noOfTimesLotFull =0;
-    private int noOfTimesLotAvailable =0;
+class DummyOwner implements Subscriber {
+    public int noOfTimesLotFull = 0;
+    public int noOfTimesLotAvailable = 0;
 
     @Override
-    public void informParkingLotFull()
-    {
+    public void informParkingLotFull() {
         ++noOfTimesLotFull;
     }
 
     @Override
-    public void informParkingLotAvailable()
-    {
+    public void informParkingLotAvailable() {
         ++noOfTimesLotAvailable;
     }
-
-    public int getCountOfLotFull(){ return noOfTimesLotFull;}
-
-    public int getCountOfLotAvailable(){ return noOfTimesLotAvailable; }
 }
 
 
-class DummySecurityGuard implements Consumer {
-    private int noOfTimesLotFull =0;
-    private int noOfTimesLotAvailable =0;
+class DummySecurityGuard implements Subscriber {
+    public int noOfTimesLotFull = 0;
+    public int noOfTimesLotAvailable = 0;
 
     @Override
-    public void informParkingLotFull()
-    {
+    public void informParkingLotFull() {
         ++noOfTimesLotFull;
     }
 
     @Override
-    public void informParkingLotAvailable()
-    {
+    public void informParkingLotAvailable() {
         ++noOfTimesLotAvailable;
     }
-
-    public int getCountOfLotFull(){ return noOfTimesLotFull;}
-
-    public int getCountOfLotAvailable(){ return noOfTimesLotAvailable; }
 }
 
 
@@ -52,23 +40,23 @@ public class ParkingLotTest {
 
     @Test
     void givenParkingLot_whenPark_thenShouldBeAbleToPark() throws Exception {
-        Consumer owner = new DummyOwner();
+        Subscriber owner = new DummyOwner();
         ParkingLot parkingLot = new ParkingLot(1, owner);
         //assertTrue(parkingLot.park(new Object()));
-        assertDoesNotThrow(()-> parkingLot.park(new Object()));
+        assertDoesNotThrow(() -> parkingLot.park(new Object()));
     }
 
     @Test
     void givenParkingLotHavingCapacityTen_whenPark_thenShouldBeAbleToPark() throws Exception {
-        Consumer owner = new DummyOwner();
+        Subscriber owner = new DummyOwner();
         ParkingLot parkingLot = new ParkingLot(10, owner);
 
-        assertDoesNotThrow(()-> parkingLot.park(new Object()));
+        assertDoesNotThrow(() -> parkingLot.park(new Object()));
     }
 
     @Test
     void givenParkingLotWithNoCapacity_whenPark_thenShouldNotBeAbleToPark() throws Exception {
-        Consumer owner = new DummyOwner();
+        Subscriber owner = new DummyOwner();
         ParkingLot parkingLot = new ParkingLot(0, owner);
         Object objectOne = new Object();
 
@@ -77,37 +65,37 @@ public class ParkingLotTest {
 
     @Test
     void givenParkingLotCapacityTwoWithOneFreeSpace_whenPark_thenShouldBeAbleToPark() throws Exception {
-        Consumer owner = new DummyOwner();
+        Subscriber owner = new DummyOwner();
         ParkingLot parkingLot = new ParkingLot(2, owner);
         parkingLot.park(new Object());
 
-        assertDoesNotThrow(()-> parkingLot.park(new Object()));
+        assertDoesNotThrow(() -> parkingLot.park(new Object()));
     }
 
     @Test
     void givenParkingLotCapacityTwoWithNoFreeSpace_whenPark_thenShouldNotBeAbleToPark() throws Exception {
-        Consumer owner = new DummyOwner();
+        Subscriber owner = new DummyOwner();
         ParkingLot parkingLot = new ParkingLot(2, owner);
         parkingLot.park(new Object());
         parkingLot.park(new Object());
 
-        assertThrows(ParkingLotFullException.class,()->parkingLot.park(new Object()));
+        assertThrows(ParkingLotFullException.class, () -> parkingLot.park(new Object()));
     }
 
     @Test
     void givenParkingLotCapacityTwoWithNoFreeSpace_whenParkSameObject_thenItThrowsException() throws Exception {
-        Consumer owner = new DummyOwner();
+        Subscriber owner = new DummyOwner();
         ParkingLot parkingLot = new ParkingLot(2, owner);
         Object objectOne = new Object();
 
         parkingLot.park(objectOne);
 
-        assertThrows(VechileAlreadyParkedException.class,()-> parkingLot.park(objectOne));
+        assertThrows(VechileAlreadyParkedException.class, () -> parkingLot.park(objectOne));
     }
 
     @Test
     void givenParkingLotCapacityOne_WhenUnparkTheParkObject_ThenItShouldBeUnPark() throws Exception {
-        Consumer owner = new DummyOwner();
+        Subscriber owner = new DummyOwner();
         ParkingLot parkingLot = new ParkingLot(1, owner);
         Object object = new Object();
         parkingLot.park(object);
@@ -117,7 +105,7 @@ public class ParkingLotTest {
 
     @Test
     void givenParkingLotWithCapacityTwo_WhenUnParkTheNotParkedObject_ThenItShouldNotAbleToUnPark() throws Exception {
-        Consumer owner = new DummyOwner();
+        Subscriber owner = new DummyOwner();
         ParkingLot parkingLot = new ParkingLot(2, owner);
 
         Object objectOne = new Object();
@@ -125,7 +113,7 @@ public class ParkingLotTest {
 
         parkingLot.park(objectOne);
 
-        assertThrows(VechileNotFoundException.class,()->parkingLot.unPark(objectTwo));
+        assertThrows(VechileNotFoundException.class, () -> parkingLot.unPark(objectTwo));
     }
 
     @Test
@@ -138,7 +126,7 @@ public class ParkingLotTest {
         parkingLot.park(firstVechile);
         parkingLot.park(secondVechile);
 
-        assertEquals(1, dummyOwner.getCountOfLotFull());
+        assertEquals(1, dummyOwner.noOfTimesLotFull);
     }
 
     @Test
@@ -153,7 +141,7 @@ public class ParkingLotTest {
 
         parkingLot.unPark(secondVehicle);
 
-        assertEquals(2, dummyOwner.getCountOfLotAvailable());
+        assertEquals(2, dummyOwner.noOfTimesLotAvailable);
     }
 
     @Test
@@ -169,7 +157,7 @@ public class ParkingLotTest {
         parkingLot.unPark(secondVehicle);
         parkingLot.park(secondVehicle);
 
-        assertEquals(2, dummyOwner.getCountOfLotFull());
-        assertEquals(2, dummyOwner.getCountOfLotAvailable());
+        assertEquals(2, dummyOwner.noOfTimesLotAvailable);
+        assertEquals(2, dummyOwner.noOfTimesLotAvailable);
     }
 }

@@ -1,6 +1,6 @@
 package com.thoughtworks;
 
-public interface Consumer {
+public interface Subscriber {
     void informParkingLotFull();
 
     void informParkingLotAvailable();
