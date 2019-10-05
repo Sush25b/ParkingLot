@@ -103,7 +103,7 @@ public class ParkingLotTest {
 
     @Test
     void givenParkingLotCapacityOne_WhenUnparkTheParkObject_ThenItShouldBeUnPark() throws Exception {
-       // Subscriber owner = new DummyOwner();
+        // Subscriber owner = new DummyOwner();
         List<Subscriber> owner = Arrays.asList(new DummyOwner());
         ParkingLot parkingLot = new ParkingLot(1, owner);
         Object object = new Object();
@@ -137,7 +137,7 @@ public class ParkingLotTest {
         parkingLot.park(firstVechile);
         parkingLot.park(secondVechile);
 
-        assertEquals(1,dummyOwner.noOfTimesLotFull );
+        assertEquals(1, dummyOwner.noOfTimesLotFull);
     }
 
     @Test
@@ -178,9 +178,12 @@ public class ParkingLotTest {
     void givenParkingLotCapacityTwoWithTwoVechilePark_whenUnParkOneVechile_ThenInformOwnerAndGuardOnceThatLotIsAvailable() throws Exception {
 
         DummyOwner dummyOwner = new DummyOwner();
-        DummySecurityGuard dummyguard= new DummySecurityGuard();
-        List<Subscriber> owner = Arrays.asList(dummyOwner, dummyguard);
-        ParkingLot parkingLot = new ParkingLot(2, owner);
+        DummySecurityGuard dummyguard = new DummySecurityGuard();
+        List<Subscriber> subscribers = Arrays.asList(dummyOwner, dummyguard);
+        ParkingLot parkingLot = new ParkingLot(2, subscribers);
+
+        DummySecurityGuard dummySecurityGuard = new DummySecurityGuard();
+
         Object firstVehicle = new Object();
         Object secondVehicle = new Object();
         parkingLot.park(firstVehicle);
@@ -189,6 +192,6 @@ public class ParkingLotTest {
         parkingLot.unPark(secondVehicle);
 
         assertEquals(2, dummyOwner.noOfTimesLotAvailable);
-        assertEquals(2,dummyguard.noOfTimesLotAvailable);
+        assertEquals(2, dummyguard.noOfTimesLotAvailable);
     }
 }

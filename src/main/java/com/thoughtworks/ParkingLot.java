@@ -32,7 +32,8 @@ public class ParkingLot {
         }
 
         vehicles.add(object);
-        this.notifyIfFull();   //parkingLotGotFull   isParkingLotFull checkParkingSpace getParkingSpace
+        this.notifyIfSpaceFull();   //parkingLotGotFull   isParkingLotFull checkParkingSpace getParkingSpace
+        this.notifyIfSpaceNotFull();
     }
 
     public Object unPark(Object object) throws Exception {
@@ -42,26 +43,26 @@ public class ParkingLot {
         }
 
         vehicles.remove(vehicles.indexOf(object));
-        this.notifyIfFull();
+        this.notifyIfSpaceFull();
+        this.notifyIfSpaceNotFull();
         return object;
     }
 
-    private void notifyIfFull()
-    {
-        if(!isSpaceAvailable())       //space is full--> then only notify owner  ELSE dont notify
+    private void notifyIfSpaceFull() {
+        if (!isSpaceAvailable())       //space is full--> then only notify owner  ELSE dont notify
         {
-            for(Subscriber s:subscriber){
+            for (Subscriber s : subscriber) {
                 s.informParkingLotFull();
             }
         }
+    }
 
-
+    private void notifyIfSpaceNotFull(){
         if(isSpaceAvailable())       //space is  not full--> then only notify owner  ELSE dont notify
         {
             for(Subscriber s:subscriber){
                 s.informParkingLotAvailable();
             }
         }
-
     }
 }
