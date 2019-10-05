@@ -14,7 +14,7 @@ public class ParkingLot {
     }
 
     private boolean isSpaceAvailable() {
-        return vehicles.size() < capacity;
+        return vehicles.size() <capacity;
     }
 
     private boolean isNotAlreadyParked(Object object) {
@@ -41,8 +41,9 @@ public class ParkingLot {
             throw new VechileNotFoundException();
         }
 
+        vehicles.remove(vehicles.indexOf(object));
         this.notifyIfFull();
-        return vehicles.remove(vehicles.indexOf(object));
+        return object;
     }
 
     private void notifyIfFull()
@@ -52,7 +53,7 @@ public class ParkingLot {
             consumer.informParkingLotFull();
         }
 
-        if(isSpaceAvailable())       //space is full--> then only notify owner  ELSE dont notify
+        if(isSpaceAvailable())       //space is  not full--> then only notify owner  ELSE dont notify
         {
             consumer.informParkingLotAvailable();
         }

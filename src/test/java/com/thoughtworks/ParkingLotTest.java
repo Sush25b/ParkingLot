@@ -153,6 +153,23 @@ public class ParkingLotTest {
 
         parkingLot.unPark(secondVehicle);
 
-        assertEquals(1, dummyOwner.getCountOfLotAvailable());
+        assertEquals(2, dummyOwner.getCountOfLotAvailable());
+    }
+
+    @Test
+    void givenParkingLotWithCapacityTwo_whenUnParkAndPark_ThenItShouldInformOwnerLotOnce() throws Exception {
+
+        DummyOwner dummyOwner = new DummyOwner();
+        ParkingLot parkingLot = new ParkingLot(2, dummyOwner);
+        Object firstVehicle = new Object();
+        Object secondVehicle = new Object();
+        parkingLot.park(firstVehicle);
+        parkingLot.park(secondVehicle);
+
+        parkingLot.unPark(secondVehicle);
+        parkingLot.park(secondVehicle);
+
+        assertEquals(2, dummyOwner.getCountOfLotFull());
+        assertEquals(2, dummyOwner.getCountOfLotAvailable());
     }
 }
